@@ -1,3 +1,4 @@
+Original repository: https://github.com/gipsh/epub-to-kindle
 # epub-to-kindle
 
 Convert and send epubs to a kindle device 
