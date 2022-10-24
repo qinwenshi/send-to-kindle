@@ -1,14 +1,14 @@
 package main
 
 import (
-    "fmt"
-    "strings"
+	"fmt"
+	"strings"
 
-    "crypto/tls"
+	"crypto/tls"
 
-    "gopkg.in/gomail.v2"
-   // "github.com/aws/aws-sdk-go/service/ses"
-    "github.com/badoux/checkmail"
+	"gopkg.in/gomail.v2"
+	// "github.com/aws/aws-sdk-go/service/ses"
+	"github.com/badoux/checkmail"
 )
 
 func Send_Mail(ebook EBook, cfg Config) {
@@ -33,23 +33,21 @@ func Send_Mail(ebook EBook, cfg Config) {
 
 }
 
+func ValidateAddress(address string) bool {
 
-func ValidateAddress(address string) bool  {
+	err := checkmail.ValidateFormat(address)
+	if err != nil {
+		fmt.Println("format not valid")
+		return false
+	}
 
-		err := checkmail.ValidateFormat(address)
-		if err != nil {
-			fmt.Println("format not valid")
-			return false 
-		}
+	components := strings.Split(address, "@")
+	_, domain := components[0], components[1]
+	if domain != "kindle.com" && domain != "kindle.cn" {
+		fmt.Println("domain is not kindle.com")
+		return false
+	}
 
-	        components := strings.Split(address, "@")
-    		_, domain := components[0], components[1]
-		if domain !=  "kindle.com" {
-			fmt.Println("domain is not kindle.com")
-			return false
-		}
-	
-		return true
-
+	return true
 
 }
